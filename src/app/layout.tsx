@@ -6,7 +6,7 @@ import { Theme } from "@/components/providers/theme";
 export const metadata: Metadata = {
   title: "Fancy",
   description:
-    "A fancy site created with Next.js, Tailwindcss, Shadcn/ui, and Framer Motion",
+    "A fancy site created with Next.js, Tailwindcss, Shadcn/ui, and Motion",
 };
 
 export default function RootLayout({
