@@ -20,8 +20,13 @@ export default function Hero() {
 
   return (
     <section className="hero-background-pattern flex h-full min-h-screen items-center justify-center">
-      <div>
-        <h1 className={cn("text-8xl uppercase", sanguardRegular.className)}>
+      <div className="px-4 md:px-0">
+        <h1
+          className={cn(
+            "text-6xl uppercase md:text-8xl",
+            sanguardRegular.className,
+          )}
+        >
           <div className="relative w-full">
             <motion.div
               initial={{ opacity: 0, y: 80 }}
@@ -38,9 +43,9 @@ export default function Hero() {
                 repeat: Infinity,
                 ease: "linear",
               }}
-              className="absolute -top-4 left-20"
+              className="absolute -top-2 left-10 md:-top-4 md:left-20"
             >
-              <CogIcon size={100} />
+              <CogIcon className="size-14 md:size-24" />
             </motion.div>
           </div>
           <motion.div
@@ -53,7 +58,7 @@ export default function Hero() {
           </motion.div>
           <div className="flex items-center justify-end">
             <div
-              className="flex items-center"
+              className="hidden items-center md:flex"
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
             >
