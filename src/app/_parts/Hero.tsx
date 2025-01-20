@@ -20,7 +20,7 @@ export default function Hero() {
 
   return (
     <section className="hero-background-pattern flex h-full min-h-screen items-center justify-center">
-      <div className="p-20">
+      <div>
         <h1 className={cn("text-8xl uppercase", sanguardRegular.className)}>
           <div className="relative w-full">
             <motion.div
@@ -38,7 +38,7 @@ export default function Hero() {
                 repeat: Infinity,
                 ease: "linear",
               }}
-              className="absolute -top-4 left-20 -z-10"
+              className="absolute -top-4 left-20"
             >
               <CogIcon size={100} />
             </motion.div>
@@ -108,7 +108,7 @@ function TextCycleLoop({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: 0.6 }}
       className={cn(
-        "relative flex h-20 w-[340px] justify-end overflow-hidden border",
+        "relative flex h-20 w-[340px] justify-end overflow-hidden",
         className,
       )}
     >
