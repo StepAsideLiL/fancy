@@ -24,7 +24,7 @@ export default function TechnologiesDescription() {
           initial={{ opacity: 0, x: -100 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}
-          // viewport={{ once: true }}
+          viewport={{ once: true }}
         >
           Technologies
         </motion.h2>
@@ -33,7 +33,7 @@ export default function TechnologiesDescription() {
           initial={{ opacity: 0, x: -100 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
-          // viewport={{ once: true }}
+          viewport={{ once: true }}
         >
           Technologies is the most important part of any project.
         </motion.p>
@@ -47,7 +47,7 @@ export default function TechnologiesDescription() {
             initial={{ opacity: 0, scale: 0 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3, delay: 0.1 + index * 0.1 }}
-            // viewport={{ once: true }}
+            viewport={{ once: true }}
           >
             <CardHeader className="flex-row items-center justify-end gap-2">
               <Badge
