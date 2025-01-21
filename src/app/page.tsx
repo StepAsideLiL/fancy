@@ -1,3 +1,4 @@
+import DesignWithTheseTech from "./_parts/DesignWithTheseTech";
 import Hero from "./_parts/Hero";
 import TechnologiesDescription from "./_parts/TechnologiesDescription";
 
@@ -7,6 +8,8 @@ export default function Page() {
       <Hero />
 
       <TechnologiesDescription />
+
+      <DesignWithTheseTech />
     </main>
   );
 }
