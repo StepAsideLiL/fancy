@@ -1,7 +1,9 @@
 import { IconBaseProps } from "react-icons";
 import * as SimpleIcons from "react-icons/si";
+import * as LucideIcons from "react-icons/lu";
 
 const icons = {
+  Github: (props: IconBaseProps) => <SimpleIcons.SiGithub {...props} />,
   Motion: ({ size = 24, color }: IconBaseProps) => (
     <svg viewBox="0 0 41 14" width={size} height={size}>
       <path
@@ -13,6 +15,8 @@ const icons = {
   Nextjs: (props: IconBaseProps) => <SimpleIcons.SiNextdotjs {...props} />,
   Shadcn: (props: IconBaseProps) => <SimpleIcons.SiShadcnui {...props} />,
   Tailwind: (props: IconBaseProps) => <SimpleIcons.SiTailwindcss {...props} />,
+  Web: (props: IconBaseProps) => <LucideIcons.LuGlobe {...props} />,
+  XSocial: (props: IconBaseProps) => <SimpleIcons.SiX {...props} />,
 };
 
 export default icons;
