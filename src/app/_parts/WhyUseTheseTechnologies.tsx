@@ -6,7 +6,7 @@ import { useRef } from "react";
 export default function WhyUseTheseTechnologies() {
   return (
     <section className="min-h-screen bg-foreground text-background">
-      <div className="h-96"></div>
+      <div className="h-40"></div>
 
       <div className="container mx-auto flex h-screen max-w-5xl flex-col items-center justify-center gap-10 px-5 md:px-0">
         <ScrollTextOpacity>
@@ -18,8 +18,6 @@ export default function WhyUseTheseTechnologies() {
           applications quickly.
         </ScrollTextOpacity>
       </div>
-
-      <div className="h-96"></div>
     </section>
   );
 }
