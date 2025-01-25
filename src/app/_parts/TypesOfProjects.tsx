@@ -58,7 +58,7 @@ function BuiltWithNextjsEx1() {
   const ref = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start end", "end 0.9"],
+    offset: ["start end", "start 0.2"],
   });
 
   const imageX = useTransform(scrollYProgress, [0, 1], [-500, 0]);
@@ -93,7 +93,7 @@ function BuiltWithNextjsEx2() {
   const ref = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start end", "end 0.9"],
+    offset: ["start end", "start 0.2"],
   });
 
   const imageX = useTransform(scrollYProgress, [0, 1], [-500, 0]);
@@ -128,7 +128,7 @@ function BuiltWithNextjsEx3() {
   const ref = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start end", "end 0.9"],
+    offset: ["start end", "start 0.2"],
   });
 
   const imageX = useTransform(scrollYProgress, [0, 1], [-500, 0]);
