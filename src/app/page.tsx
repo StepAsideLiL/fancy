@@ -18,7 +18,6 @@ export default function Page() {
 
       <ProfileAndPortfolio />
 
-      {/* ToDo: Design 3 */}
       <TypesOfProjects />
 
       {/* ToDo: Design 4 */}

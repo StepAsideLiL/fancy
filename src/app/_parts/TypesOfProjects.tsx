@@ -26,11 +26,11 @@ function TitleAndSubtitle() {
   const ref = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 0.2", "end 0.9"],
+    offset: ["start 0.2", "start 0.9"],
   });
 
-  const headingScale = useTransform(scrollYProgress, [0, 1], [1, 3]);
-  const subheadingOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const headingScale = useTransform(scrollYProgress, [0, 0.5], [1, 3]);
+  const subheadingOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const subheadingY = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
   return (
