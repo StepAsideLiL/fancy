@@ -2,12 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Theme } from "@/components/providers/theme";
 import { geistMono, geistSans } from "@/lib/fonts";
+import nextMetadata from "@/lib/next-metadata";
 
-export const metadata: Metadata = {
-  title: "Fancy",
-  description:
-    "A fancy site created with Next.js, Tailwindcss, Shadcn/ui, and Motion",
-};
+export const metadata: Metadata = nextMetadata();
 
 export default function RootLayout({
   children,
