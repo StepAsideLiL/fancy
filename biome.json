@@ -24,7 +24,13 @@
     "rules": {
       "recommended": true,
       "nursery": {
-        "useSortedClasses": "on"
+        "useSortedClasses": {
+          "level": "on",
+          "fix": "safe",
+          "options": {
+            "functions": ["cn", "cva"]
+          }
+        }
       },
       "performance": {
         "noNamespaceImport": "off"
