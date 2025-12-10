@@ -21,7 +21,7 @@ export default function nextMetadata(
         { url: "/icons/favicon-32x32.png", sizes: "32x32" },
       ],
     },
-    manifest: "/siteConfig.webmanifest",
+    manifest: "/site.webmanifest",
     openGraph: {
       title: siteConfig.title,
       description: siteConfig.description,
