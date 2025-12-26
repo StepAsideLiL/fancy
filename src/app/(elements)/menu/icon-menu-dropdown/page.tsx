@@ -35,31 +35,49 @@ const menuList = [
 export default function Page() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [menuExist, setMenuExist] = React.useState(false);
-  const tl = gsap.timeline();
   const menuContainerRef = React.useRef<HTMLUListElement | null>(null);
   const menuListRef = React.useRef<HTMLLIElement[]>([]);
 
   useGSAP(() => {
+    const tl = gsap.timeline();
     if (isMenuOpen) {
-      tl.to(menuContainerRef.current, {
-        height: "auto",
-      });
+      tl.to(
+        menuContainerRef.current,
+        {
+          height: "auto",
+        },
+        0,
+      );
       menuListRef.current.forEach((ref) => {
-        gsap.to(ref, {
-          y: 0,
-        });
+        tl.to(
+          ref,
+          {
+            y: 0,
+          },
+          0,
+        );
       });
     } else {
-      tl.to(menuContainerRef.current, {
-        height: 0,
-        onComplete: () => {
-          setMenuExist(false);
+      tl.to(
+        menuContainerRef.current,
+        {
+          height: 0,
         },
-      });
+        0,
+      );
       menuListRef.current.forEach((ref, i) => {
-        gsap.to(ref, {
-          y: -80 * (i + 1),
-        });
+        tl.to(
+          ref,
+          {
+            y: -80 * (i + 1),
+            onComplete: () => {
+              if (!menuExist) {
+                setMenuExist(false);
+              }
+            },
+          },
+          0,
+        );
       });
     }
   }, [isMenuOpen]);
@@ -77,10 +95,10 @@ export default function Page() {
               variant={"outline"}
               className="cursor-pointer"
               onClick={() => {
-                setIsMenuOpen((isMenuOpen) => !isMenuOpen);
                 if (!isMenuOpen) {
                   setMenuExist(true);
                 }
+                setIsMenuOpen((isMenuOpen) => !isMenuOpen);
               }}
             >
               <Plus />
@@ -102,6 +120,7 @@ export default function Page() {
                       menuListRef.current[i] = el;
                     }
                   }}
+                  style={{ translate: `0 ${-80 * (i + 1)}px` }}
                 >
                   <Link
                     href={menu.href}
