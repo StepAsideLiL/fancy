@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Theme } from "@/components/providers/theme";
 import { geistMono, geistSans } from "@/lib/fonts";
 import nextMetadata from "@/lib/next-metadata";
 
@@ -16,9 +15,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Theme attribute="class" defaultTheme="default" enableSystem>
-          {children}
-        </Theme>
+        {children}
       </body>
     </html>
   );
