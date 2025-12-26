@@ -34,9 +34,9 @@ const menuList = [
 
 export default function Page() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [menuExist, setMenuExist] = React.useState(true);
+  const [menuExist, setMenuExist] = React.useState(false);
   const tl = gsap.timeline();
-  const menuContainerRef = React.useRef<HTMLElement | null>(null);
+  const menuContainerRef = React.useRef<HTMLUListElement | null>(null);
   const menuListRef = React.useRef<HTMLLIElement[]>([]);
 
   useGSAP(() => {
@@ -44,9 +44,22 @@ export default function Page() {
       tl.to(menuContainerRef.current, {
         height: "auto",
       });
+      menuListRef.current.forEach((ref) => {
+        gsap.to(ref, {
+          y: 0,
+        });
+      });
     } else {
       tl.to(menuContainerRef.current, {
         height: 0,
+        onComplete: () => {
+          setMenuExist(false);
+        },
+      });
+      menuListRef.current.forEach((ref, i) => {
+        gsap.to(ref, {
+          y: -80 * (i + 1),
+        });
       });
     }
   }, [isMenuOpen]);
@@ -65,6 +78,9 @@ export default function Page() {
               className="cursor-pointer"
               onClick={() => {
                 setIsMenuOpen((isMenuOpen) => !isMenuOpen);
+                if (!isMenuOpen) {
+                  setMenuExist(true);
+                }
               }}
             >
               <Plus />
@@ -73,11 +89,11 @@ export default function Page() {
         </div>
 
         {menuExist && (
-          <nav
-            className="h-0 overflow-clip bg-background px-10 shadow-foreground/50 shadow-lg"
-            ref={menuContainerRef}
-          >
-            <ul className="divide-y">
+          <nav>
+            <ul
+              className="h-0 divide-y overflow-clip bg-background px-10 shadow-foreground/50 shadow-lg"
+              ref={menuContainerRef}
+            >
               {menuList.map((menu, i) => (
                 <li
                   key={menu.href}
