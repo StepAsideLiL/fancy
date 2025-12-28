@@ -39,7 +39,6 @@ function FlipCard() {
           if (!(currentAnimationTime < 0.5 && currentAnimationTime > 0)) {
             tl.to(cardRef.current, {
               rotateY: flipCount * 180,
-              // duration: 1,
               onUpdate: () => {
                 setCurrentAnimationTime(tl.time());
                 console.log(tl.time());
@@ -54,9 +53,10 @@ function FlipCard() {
       >
         <div
           className={cn(
-            "absolute inset-0 h-full w-full transition-all duration-200",
-            flipCount % 2 === 1 ? "opacity-100" : "opacity-0",
+            "absolute inset-0 h-full w-full opacity-100 transition-all",
+            flipCount % 2 !== 1 && "opacity-0",
           )}
+          style={{ transitionDuration: "0.5s" }}
         >
           <div className="flex h-full items-center justify-center">
             <h1>hello</h1>
@@ -65,9 +65,10 @@ function FlipCard() {
 
         <div
           className={cn(
-            "absolute inset-0 h-full w-full rotate-y-180 transition-all",
-            flipCount % 2 === 0 ? "opacity-100" : "opacity-0",
+            "absolute inset-0 h-full w-full rotate-y-180 opacity-0 transition-all",
+            flipCount % 2 === 0 && "opacity-100",
           )}
+          style={{ transitionDuration: "0.5s" }}
         >
           <div className="flex h-full items-center justify-center">
             <h1>world</h1>
