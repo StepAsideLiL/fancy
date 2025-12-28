@@ -3,6 +3,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import React from "react";
+import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(useGSAP);
 
@@ -17,9 +18,10 @@ export default function Page() {
 }
 
 function FlipCard() {
-  const [flipCount, setFlipCount] = React.useState(1);
   const tl = gsap.timeline();
   const cardRef = React.useRef<HTMLDivElement | null>(null);
+  const [flipCount, setFlipCount] = React.useState(1);
+  const [currentAnimationTime, setCurrentAnimationTime] = React.useState(0);
 
   return (
     <div className="perspective-distant">
@@ -27,14 +29,50 @@ function FlipCard() {
       {/** biome-ignore lint/a11y/noStaticElementInteractions: <""> */}
       <div
         ref={cardRef}
-        className="flex h-52 w-40 items-center justify-center rounded-lg border bg-red-500"
+        className="relative flex h-52 w-40 items-center justify-center rounded-lg border bg-red-500"
+        onMouseDown={(e) => {
+          if (e.detail > 1) {
+            e.preventDefault();
+          }
+        }}
         onClick={() => {
-          tl.to(cardRef.current, { rotateY: flipCount * 180 });
-          setFlipCount((flipCount) => flipCount + 1);
+          if (!(currentAnimationTime < 0.5 && currentAnimationTime > 0)) {
+            tl.to(cardRef.current, {
+              rotateY: flipCount * 180,
+              // duration: 1,
+              onUpdate: () => {
+                setCurrentAnimationTime(tl.time());
+                console.log(tl.time());
+              },
+              onComplete: () => {
+                tl.clear();
+              },
+            });
+            setFlipCount((flipCount) => flipCount + 1);
+          }
         }}
       >
-        <div>hello</div>
-        <div>world</div>
+        <div
+          className={cn(
+            "absolute inset-0 h-full w-full transition-all duration-200",
+            flipCount % 2 === 1 ? "opacity-100" : "opacity-0",
+          )}
+        >
+          <div className="flex h-full items-center justify-center">
+            <h1>hello</h1>
+          </div>
+        </div>
+
+        <div
+          className={cn(
+            "absolute inset-0 h-full w-full rotate-y-180 transition-all",
+            flipCount % 2 === 0 ? "opacity-100" : "opacity-0",
+          )}
+        >
+          <div className="flex h-full items-center justify-center">
+            <h1>world</h1>
+          </div>
+        </div>
       </div>
     </div>
   );
