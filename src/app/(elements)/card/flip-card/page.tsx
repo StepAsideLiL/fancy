@@ -122,7 +122,6 @@ function FlipCard({
         rotateY: flipCount * 180,
         onUpdate: () => {
           setCurrentAnimationTime(tl.time());
-          console.log(tl.time());
         },
         onComplete: () => {
           tl.clear();
@@ -163,6 +162,7 @@ function FlipCard({
               alt={card.title}
               width={512}
               height={512}
+              loading="eager"
               className="absolute inset-0 object-cover"
             />
             <div className="absolute inset-0 z-10 h-full w-full bg-foreground/20" />
@@ -213,13 +213,14 @@ function Cursor() {
   const visible = React.useRef(false);
 
   React.useEffect(() => {
+    document.body.style.cursor = "none";
+
     const unsub = cursorMessage._subscribe((msg) => {
       message.current = msg;
 
       if (bubbleRef.current) {
         bubbleRef.current.textContent = msg ?? "";
         bubbleRef.current.classList.toggle("opacity-0", !msg);
-        bubbleRef.current.classList.toggle("scale-75", !msg);
       }
     });
 
@@ -241,10 +242,9 @@ function Cursor() {
     const render = () => {
       if (cursorRef.current) {
         cursorRef.current.style.transform = `translate3d(${mouse.current.x}px, ${mouse.current.y}px, 0)`;
-      }
-
-      if (bubbleRef.current && message.current) {
-        bubbleRef.current.style.transform = `translate3d(${mouse.current.x + 18}px, ${mouse.current.y + 18}px, 0)`;
+        if (bubbleRef.current) {
+          bubbleRef.current.style.transform = `translate3d(${mouse.current.x}px, ${mouse.current.y}px, 0)`;
+        }
       }
 
       raf.current = requestAnimationFrame(render);
@@ -278,24 +278,38 @@ function Cursor() {
 
   return (
     <>
-      {/* Base SVG Cursor (never disappears) */}
       <div
         ref={cursorRef}
         className="-translate-x-1/2 -translate-y-1/2 pointer-events-none fixed top-0 left-0 z-9999"
       >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="black">
-          <title>cursor</title>
-          <circle cx="12" cy="12" r="5" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={28}
+          height={28}
+          viewBox="0 0 14 14"
+        >
+          <title>Cursor</title>
+          <g fill="none">
+            <path
+              fill="#d7e0ff"
+              d="M13.246 4.973c0-1.126-10.832-5.333-12.222-3.945C-.362 2.413 3.902 13.25 5.02 13.25c1.303 0 2.068-4.965 2.377-5.854c.886-.313 5.849-1.115 5.849-2.423"
+            ></path>
+            <path
+              stroke="#4147d5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M13.246 4.973c0-1.126-10.832-5.333-12.222-3.945C-.362 2.413 3.902 13.25 5.02 13.25c1.303 0 2.068-4.965 2.377-5.854c.886-.313 5.849-1.115 5.849-2.423"
+              strokeWidth={1}
+            ></path>
+          </g>
         </svg>
       </div>
 
       {/* Message Bubble */}
       <div
         ref={bubbleRef}
-        className="pointer-events-none fixed top-0 left-0 z-9999 flex size-10 scale-75 items-center justify-center rounded-full bg-amber-200 opacity-0 transition-all duration-150 ease-out"
-      >
-        {/* <div className="flex h-16 w-16 items-center justify-center rounded-full bg-black font-medium text-white text-xs" /> */}
-      </div>
+        className="-translate-x-1/2 -translate-y-1/2 pointer-events-none fixed top-0 left-0 z-9999 flex size-20 items-center justify-center rounded-full bg-amber-200 opacity-0 transition-all duration-150 ease-out"
+      />
     </>
   );
 }
