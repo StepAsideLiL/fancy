@@ -67,9 +67,34 @@ const cards = [
   },
 ];
 
+type Listener = (message: string | null) => void;
+
+let listener: Listener | null = null;
+
+const cursorMessage = {
+  show(message: string) {
+    listener?.(message);
+  },
+  hide() {
+    listener?.(null);
+  },
+  _subscribe(fn: Listener) {
+    listener = fn;
+    return () => {
+      listener = null;
+    };
+  },
+};
+
 export default function Page() {
+  React.useEffect(() => {
+    document.body.style.cursor = "none";
+  });
+
   return (
     <main className="mx-auto w-full max-w-7xl">
+      <Cursor />
+
       <div className="py-10">
         <div className="flex flex-wrap justify-center gap-10 px-10 xl:px-0">
           {cards.map((card) => (
@@ -114,6 +139,8 @@ function FlipCard({
       <div
         ref={cardRef}
         className="relative flex size-72 items-center justify-center"
+        onMouseEnter={() => cursorMessage.show("Click")}
+        onMouseLeave={cursorMessage.hide}
         onMouseDown={(e) => {
           if (e.detail > 1) {
             e.preventDefault();
@@ -172,5 +199,103 @@ function FlipCard({
         </div>
       </div>
     </div>
+  );
+}
+
+function Cursor() {
+  const cursorRef = React.useRef<HTMLDivElement>(null);
+  const bubbleRef = React.useRef<HTMLDivElement>(null);
+
+  const mouse = React.useRef({ x: 0, y: 0 });
+  const raf = React.useRef<number | null>(null);
+  const message = React.useRef<string | null>(null);
+
+  const visible = React.useRef(false);
+
+  React.useEffect(() => {
+    const unsub = cursorMessage._subscribe((msg) => {
+      message.current = msg;
+
+      if (bubbleRef.current) {
+        bubbleRef.current.textContent = msg ?? "";
+        bubbleRef.current.classList.toggle("opacity-0", !msg);
+        bubbleRef.current.classList.toggle("scale-75", !msg);
+      }
+    });
+
+    const move = (e: MouseEvent) => {
+      mouse.current.x = e.clientX;
+      mouse.current.y = e.clientY;
+
+      if (!visible.current) {
+        visible.current = true;
+        cursorRef.current?.classList.remove("opacity-0");
+      }
+    };
+
+    const hide = () => {
+      visible.current = false;
+      cursorRef.current?.classList.add("opacity-0");
+    };
+
+    const render = () => {
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate3d(${mouse.current.x}px, ${mouse.current.y}px, 0)`;
+      }
+
+      if (bubbleRef.current && message.current) {
+        bubbleRef.current.style.transform = `translate3d(${mouse.current.x + 18}px, ${mouse.current.y + 18}px, 0)`;
+      }
+
+      raf.current = requestAnimationFrame(render);
+    };
+
+    const handleMouseOut = (e: MouseEvent) => {
+      if (e.relatedTarget === null) hide();
+    };
+
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseout", handleMouseOut);
+    window.addEventListener("blur", hide);
+    window.addEventListener("focus", () => {
+      visible.current = true;
+    });
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) hide();
+    });
+
+    raf.current = requestAnimationFrame(render);
+
+    return () => {
+      unsub();
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseout", handleMouseOut);
+      window.removeEventListener("blur", hide);
+      document.removeEventListener("visibilitychange", hide);
+      if (raf.current) cancelAnimationFrame(raf.current);
+    };
+  }, []);
+
+  return (
+    <>
+      {/* Base SVG Cursor (never disappears) */}
+      <div
+        ref={cursorRef}
+        className="-translate-x-1/2 -translate-y-1/2 pointer-events-none fixed top-0 left-0 z-9999"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="black">
+          <title>cursor</title>
+          <circle cx="12" cy="12" r="5" />
+        </svg>
+      </div>
+
+      {/* Message Bubble */}
+      <div
+        ref={bubbleRef}
+        className="pointer-events-none fixed top-0 left-0 z-9999 flex size-10 scale-75 items-center justify-center rounded-full bg-amber-200 opacity-0 transition-all duration-150 ease-out"
+      >
+        {/* <div className="flex h-16 w-16 items-center justify-center rounded-full bg-black font-medium text-white text-xs" /> */}
+      </div>
+    </>
   );
 }
