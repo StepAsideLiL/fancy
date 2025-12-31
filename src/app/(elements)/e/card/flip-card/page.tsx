@@ -90,6 +90,7 @@ export default function Page() {
   React.useEffect(() => {
     document.body.style.cursor = "none";
   });
+  // console.log(metadata);
 
   return (
     <main className="mx-auto w-full max-w-7xl">
