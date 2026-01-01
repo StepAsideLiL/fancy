@@ -3,12 +3,16 @@
     "name": "Flip Card",
     "description": "3d card flip with face and back side.",
     "slug": "flip-card",
-    "category": "card"
+    "category": "card",
+    "url": "e/card/flip-card",
+    "content": "## Hello\r\n"
   },
   {
     "name": "Icon Menu Dropdown",
     "description": "The dropdown trigger icon button changes by rotating.",
     "slug": "icon-menu-dropdown",
-    "category": "menu"
+    "category": "menu",
+    "url": "e/menu/icon-menu-dropdown",
+    "content": "## Hello new"
   }
 ]

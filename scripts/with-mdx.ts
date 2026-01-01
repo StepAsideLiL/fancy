@@ -5,15 +5,17 @@ import type { NextConfig } from "next";
 
 type MenuJson = {
   name: string;
+  description: string;
   slug: string;
   category: string;
-  description: string;
+  url: string;
+  content: string;
 }[];
 
 const ROOT = process.cwd();
 const APP_DIR = path.join(ROOT, "src/app/(elements)/e");
 const OUTPUT_DIR = path.join(ROOT, "src/_generated");
-const OUTPUT_FILE = path.join(OUTPUT_DIR, "menu.json");
+const OUTPUT_FILE = path.join(OUTPUT_DIR, "elements.json");
 
 function walk(dir: string, result: string[] = []) {
   if (!fs.existsSync(dir)) return result;
@@ -55,13 +57,15 @@ function generateMenu() {
     }
 
     const source = fs.readFileSync(docsPath, "utf8");
-    const { data } = matter(source);
+    const { data, content } = matter(source);
 
     menu.push({
       name: String(data.name ?? slug),
       description: String(data.description ?? ""),
       slug,
       category,
+      url: `e/${category}/${slug}`,
+      content,
     });
   }
 

@@ -16,10 +16,10 @@ const nextConfig: NextConfig = {
 const withNextMdx = createMDX({
   extension: /\.(md|mdx)$/,
   options: {
-    // remarkPlugins: [
-    //   remarkFrontmatter,
-    //   [remarkMdxFrontmatter, { name: "metadata" }],
-    // ],
+    remarkPlugins: [
+      "remark-frontmatter",
+      ["remark-mdx-frontmatter", { name: "metadata" }],
+    ],
   },
 });
 
