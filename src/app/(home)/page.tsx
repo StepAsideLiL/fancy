@@ -1,3 +1,4 @@
+import Search from "@/components/search";
 import { sanguardRegular } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
@@ -9,6 +10,8 @@ export default function Page() {
           Fancy
         </h1>
       </section>
+
+      <Search />
     </main>
   );
 }

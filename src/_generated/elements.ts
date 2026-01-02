@@ -10,11 +10,12 @@ export type TElement = {
   category: string;
   url: string;
   content: string;
+  tags: string[];
   element: ComponentType;
 };
 
 import { Element as Element0 } from "../components/elements/card/flip-card/element";
-import { Element as Element1 } from "../components/elements/menu/icon-menu-dropdown/element";
+import { Element as Element1 } from "../components/elements/menu/dropdown-menu-icon-animation/element";
 
 export const elements: TElement[] = [
 {
@@ -23,16 +24,18 @@ export const elements: TElement[] = [
   slug: "flip-card",
   category: "card",
   url: "/e/card/flip-card",
-  content: "## Hello\r\n",
+  content: "## Introduction\r\n\r\nA flip card is a perfect design pattern for hiding redundant information while keeping it accessible with a click.\r\n",
+  tags: ["card","flip","3d","rotate","gsap"],
   element: Element0,
 },
 {
-  name: "Icon Menu Dropdown",
-  description: "The dropdown trigger icon button changes by rotating.",
-  slug: "icon-menu-dropdown",
+  name: "Dropdown Menu Icon Animation",
+  description: "Rotating icon animation for dropdown menu trigger.",
+  slug: "dropdown-menu-icon-animation",
   category: "menu",
-  url: "/e/menu/icon-menu-dropdown",
-  content: "## Hello new",
+  url: "/e/menu/dropdown-menu-icon-animation",
+  content: "## Introduction\r\n\r\nA dropdown menu is an important aspect of responsive web design. So, animating the transition between the open and closed states of a dropdown menu trigger icon is a nice touch. This is an example of a rotating animation for a menu icon.\r\n",
+  tags: ["icon animation","rotate","dropdown","menu","gsap"],
   element: Element1,
 }
 ];

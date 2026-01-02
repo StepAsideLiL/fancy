@@ -14,6 +14,7 @@ type ElementMeta = {
   name: string;
   description: string;
   content: string;
+  tags: string[];
   elementImportPath: string;
 };
 
@@ -49,6 +50,7 @@ function scanElements(): ElementMeta[] {
         slug,
         name: data.name ?? slug,
         description: data.description ?? "",
+        tags: data.tags,
         content,
         elementImportPath: `../components/elements/${category}/${slug}/element`,
       });
@@ -75,6 +77,7 @@ function generateFile(elements: ElementMeta[]) {
   category: "${el.category}",
   url: "/e/${el.category}/${el.slug}",
   content: ${JSON.stringify(el.content)},
+  tags: ${JSON.stringify(el.tags)},
   element: Element${i},
 }`,
     )
@@ -92,6 +95,7 @@ export type TElement = {
   category: string;
   url: string;
   content: string;
+  tags: string[];
   element: ComponentType;
 };
 
