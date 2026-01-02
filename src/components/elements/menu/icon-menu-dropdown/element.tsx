@@ -34,7 +34,7 @@ const menuList = [
   },
 ];
 
-export default function Element() {
+export function Element() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [menuExist, setMenuExist] = React.useState(false);
   const menuListContainerRef = React.useRef<HTMLUListElement | null>(null);

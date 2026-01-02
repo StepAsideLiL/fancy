@@ -86,7 +86,7 @@ const cursorMessage = {
   },
 };
 
-export default function Element() {
+export function Element() {
   React.useEffect(() => {
     document.body.style.cursor = "none";
   });

@@ -1,4 +1,5 @@
 import { Book } from "lucide-react";
+import { MDXRemote } from "next-mdx-remote/rsc";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,9 +13,13 @@ import {
 type DocDialogProps = {
   name: string;
   discription: string;
-  Mdx: React.ReactNode;
+  content: string;
 };
-export default function DocDialog({ name, discription, Mdx }: DocDialogProps) {
+export default function DocDialog({
+  name,
+  discription,
+  content,
+}: DocDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -23,13 +28,13 @@ export default function DocDialog({ name, discription, Mdx }: DocDialogProps) {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="max-h-8/12 w-full max-w-7xl">
-        <DialogHeader>
+      <DialogContent className="block min-h-8/12 w-full min-w-5xl">
+        <DialogHeader className="pb-2">
           <DialogTitle>{name}</DialogTitle>
           <DialogDescription>{discription}</DialogDescription>
         </DialogHeader>
 
-        {Mdx}
+        <MDXRemote source={content} />
         {/* <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
