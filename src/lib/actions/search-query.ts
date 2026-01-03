@@ -2,102 +2,91 @@
 
 import { elements, type TElement } from "@/_generated/elements";
 
-type SearchPriority = "name" | "description" | "tags" | "content";
+export type TSearchPriority = "name" | "description" | "tags" | "content";
 
-export type SearchResult = {
-  element: {
-    name: TElement["name"];
-    description: TElement["description"];
-    slug: TElement["slug"];
-    category: TElement["category"];
-    url: TElement["url"];
-    content: TElement["content"];
-    tags: TElement["tags"];
-  };
-  matchedBy: SearchPriority;
+type TQueryElement = {
+  name: TElement["name"];
+  description: TElement["description"];
+  slug: TElement["slug"];
+  category: TElement["category"];
+  url: TElement["url"];
+  content: TElement["content"];
+  tags: TElement["tags"];
 };
 
-export async function searchQuery(value: string): Promise<SearchResult[]> {
+export type TSearchResult = Record<TSearchPriority, TQueryElement[]>;
+
+export async function searchQuery(value: string): Promise<TSearchResult> {
   const query = value.trim().toLowerCase();
 
   if (!query) {
-    return [];
+    return {
+      name: [],
+      description: [],
+      tags: [],
+      content: [],
+    };
   }
 
-  const nameMatches: SearchResult[] = [];
-  const descriptionMatches: SearchResult[] = [];
-  const tagsMatches: SearchResult[] = [];
-  const contentMatches: SearchResult[] = [];
+  const grouped: TSearchResult = {
+    name: [],
+    description: [],
+    tags: [],
+    content: [],
+  };
 
   for (const element of elements) {
     if (element.name.toLocaleLowerCase().includes(query)) {
-      nameMatches.push({
-        element: {
-          name: element.name,
-          description: element.description,
-          slug: element.slug,
-          category: element.category,
-          url: element.url,
-          content: element.content,
-          tags: element.tags,
-        },
-        matchedBy: "name",
+      grouped.name.push({
+        name: element.name,
+        description: element.description,
+        slug: element.slug,
+        category: element.category,
+        url: element.url,
+        content: element.content,
+        tags: element.tags,
       });
       continue;
     }
 
     if (element.description.toLocaleLowerCase().includes(query)) {
-      descriptionMatches.push({
-        element: {
-          name: element.name,
-          description: element.description,
-          slug: element.slug,
-          category: element.category,
-          url: element.url,
-          content: element.content,
-          tags: element.tags,
-        },
-        matchedBy: "description",
+      grouped.description.push({
+        name: element.name,
+        description: element.description,
+        slug: element.slug,
+        category: element.category,
+        url: element.url,
+        content: element.content,
+        tags: element.tags,
       });
       continue;
     }
 
     if (element.tags.some((tag) => tag.toLowerCase().includes(query))) {
-      tagsMatches.push({
-        element: {
-          name: element.name,
-          description: element.description,
-          slug: element.slug,
-          category: element.category,
-          url: element.url,
-          content: element.content,
-          tags: element.tags,
-        },
-        matchedBy: "tags",
+      grouped.tags.push({
+        name: element.name,
+        description: element.description,
+        slug: element.slug,
+        category: element.category,
+        url: element.url,
+        content: element.content,
+        tags: element.tags,
       });
       continue;
     }
 
     if (element.content.toLowerCase().includes(query)) {
-      contentMatches.push({
-        element: {
-          name: element.name,
-          description: element.description,
-          slug: element.slug,
-          category: element.category,
-          url: element.url,
-          content: element.content,
-          tags: element.tags,
-        },
-        matchedBy: "content",
+      grouped.content.push({
+        name: element.name,
+        description: element.description,
+        slug: element.slug,
+        category: element.category,
+        url: element.url,
+        content: element.content,
+        tags: element.tags,
       });
     }
   }
 
-  return [
-    ...nameMatches,
-    ...descriptionMatches,
-    ...tagsMatches,
-    ...contentMatches,
-  ];
+  return grouped;
 }
